@@ -57,7 +57,7 @@ BEGIN
 		END IF;
 		IF r.data_type IN ('bigint', 'bigserial', 'smallint', 'smallintserial', 'serial', 'integer') THEN
 			IF r.column_default LIKE 'nextval%' THEN
-				retorno := retorno || concatenador || 'SELECT ' || r.column_default;
+				retorno := retorno || concatenador || '(SELECT ' || r.column_default || ')';
 			ELSE
 				retorno := retorno || concatenador || '0';
 			END IF;
