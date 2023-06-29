@@ -55,12 +55,15 @@ BEGIN
 		ELSE
 			concatenador := ',';
 		END IF;
-		IF r.data_type IN ('bigint', 'bigserial', 'smallint', 'smallintserial', 'serial', 'numeric', 'integer') THEN
+		IF r.data_type IN ('bigint', 'bigserial', 'smallint', 'smallintserial', 'serial', 'integer') THEN
 			IF r.column_default LIKE 'nextval%' THEN
 				retorno := retorno || concatenador || 'SELECT ' || r.column_default || ';';
 			ELSE
 				retorno := retorno || concatenador || '0';
 			END IF;
+		END IF;
+		IF r.data_type IN ('numeric') THEN
+			retorno := retorno || concatenador || '0.0';
 		END IF;
 		IF r.data_type IN ('character', 'character varying', 'text') THEN 
 			retorno := retorno || concatenador || '''' || '''';  -- replaced the '''' with double single quotes
